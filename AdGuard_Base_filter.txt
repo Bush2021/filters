@@ -1,10 +1,10 @@
 ![Adblock Plus 2.0]
-! Checksum: 9gfoon2N95ixeJwMB9Ek+g
-! Diff-Path: ../patches/2_optimized/2_optimized-s-1719585293-3600.patch
+! Checksum: H4N1xZXLnT9wSzTp4xzXFQ
+! Diff-Path: ../patches/2_optimized/2_optimized-s-1719596101-3600.patch
 ! Title: AdGuard Base filter + EasyList (Optimized)
 ! Description: EasyList + AdGuard English filter. This filter is necessary for quality ad blocking.
-! Version: 2.3.41.75
-! TimeUpdated: 2024-06-28T14:31:23+00:00
+! Version: 2.3.41.77
+! TimeUpdated: 2024-06-28T17:31:24+00:00
 ! Expires: 5 days (update frequency)
 ||ymdgjqtu.com^
 ||psaimpagnuhu.net^
@@ -7844,6 +7844,8 @@ snaptik.app##+js(remove-attr, data-ad, a[data-ad])
 trakt.tv##+js(set-constant, artemisInit, noopFunc)
 foxweather.com,foxsports.com##+js(json-prune, ads)
 foxweather.com,foxsports.com##+js(m3u-prune, /#UPLYNK-SEGMENT:.*\,ad/, .m3u8)
+foxsports.com##+js(m3u-prune, /vod/creatives)
+foxsports.com##.permanentPubInfo
 dvdgayonline.com##+js(remove-attr, href, a[href]#clickfakeplayer)
 luxuretv.com##+js(abort-current-script, $, Modal)
 iusedtobeaboss.com##+js(addEventListener-defuser, mousedown, pop.doEvent)
@@ -9506,6 +9508,8 @@ radiopaedia.org##.ad-link-grey
 torlock.com##article > .table-responsive:has(> table > tbody > tr > td > div[style] > a[rel]:not([href*="torlock.com/"],[href^="/"]))
 jpost.com#?#.left-side section.line-left-side-after-container:has(> section div.OUTBRAIN)
 jpost.com##.spotim-banner
+jpost.com##article div.hide-for-premium + script + section.fake-br-for-article-body:empty
+jpost.com##article section.hide-for-premium + section.fake-br-for-article-body:empty
 inews.zoombangla.com##div[class^="ai-viewport-"][data-code]
 inews.zoombangla.com##iframe[src="https://zoombangla.com/jamuna100/"]
 doubleblindmag.com##div[class^="code-block code-block-"][style^="margin:8px"]
@@ -9548,8 +9552,6 @@ nativesurge.info##td:has(> div.adsbyadful)
 ||hdtoday.tv/ajax/banner
 ||scripts.dkmedia.vercel.app/popunders/
 gogoanimes.fi##.ads_watch_top
-racketboy.com###rb-content p > a[href^="https://www.ebay.com/sch/i.html"]
-racketboy.com###rb-content a[href*="amazon.com/exec/"] > img[class][srcset]
 standard.co.uk##.teads
 fullmatch.info##div[class^="penci-google-adsense-"]
 fullmatch.info##a[href^="https://linkfreshlink.com"] > img
@@ -11654,7 +11656,7 @@ majorgeeks.com##.content > b > font[color="#00000f"]
 majorgeeks.com##.content > b > font[color="#00000f"] + a[rel="nofollow"]
 majorgeeks.com##.geekycolumn > b > font[color="#000000"]
 majorgeeks.com##.geekycolumn > b > font[color="#000000"] + a[rel="nofollow"]
-news.sky.com##.sdc-site-au[data-ad-format] > div[data-role="ad-container"]
+news.sky.com#$?#.sdc-site-au { remove: true; }
 news.sky.com##.sdc-site-layout-sticky-region__ghost[data-format="leaderboard"]
 ozbargain.com.au##div[id^="ozbads-"]
 tutorialspoint.com##.google-bottom-ads
@@ -13358,6 +13360,7 @@ $popup,third-party,domain=fembed-hd.com,badfilter
 $popup,third-party,domain=sbplay2.com,badfilter
 $popup,third-party,domain=dood.ws,badfilter
 !##################
+interactive.libsyn.com#@#iframe[width="100%"][height="90"]
 @@app.arizonawildcats.com/preferences
 makeuseof.com,howtogeek.com#@#.ad-zone:not(.textads)
 makeuseof.com,howtogeek.com#@#.adsninja-ad-zone
