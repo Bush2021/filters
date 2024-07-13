@@ -1,0 +1,149 @@
+name: 'Auto Update AdBlock'
+on: 
+#  push:
+#    branches:
+#    - main
+  schedule:
+  - cron: '0 */3 * * *'
+  workflow_dispatch:
+#  watch:
+#    types: started
+ 
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4.1.7
+            
+      - name: AdGuard DNS filter #AdGuard 官方维护的 DNS 规则
+        uses: carlosperate/download-file-action@v2.0.2
+        with: 
+          file-url: https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt
+          file-name: AdGuard_Simplified_Domain_Names_Filter.txt
+
+      - name: AdGuard Base filter #AdGuard 英文规则, 优化自 EasyList，涵盖多种通用过滤规则
+        uses: carlosperate/download-file-action@v2.0.2
+        with: 
+          file-url: https://filters.adtidy.org/extension/ublock/filters/2_optimized.txt
+          file-name: AdGuard_Base_filter.txt
+
+      - name: AdGuard Chinese filter #AdGuard 中文规则, 优化自 EasyList China
+        uses: carlosperate/download-file-action@v2.0.2
+        with: 
+          file-url: https://filters.adtidy.org/extension/ublock/filters/224_optimized.txt
+          file-name: AdGuard_Chinese_filter.txt
+
+      - name: AdGuard Tracking Protection filter #AdGuard 跟踪保护规则
+        uses: carlosperate/download-file-action@v2.0.2
+        with: 
+          file-url: https://filters.adtidy.org/extension/ublock/filters/3_optimized.txt
+          file-name: AdGuard_Tracking_Protection_filter.txt
+
+      - name: AdGuard Tracking Parameters #AdGuard 阻止网页上的干扰性元素，包括 cookie 通知、第三方小部件和页面内弹出窗口。
+        uses: carlosperate/download-file-action@v2.0.2
+        with: 
+          file-url: https://filters.adtidy.org/extension/ublock/filters/17_optimized.txt
+          file-name: AdGuard_Tracking_Parameters.txt
+
+      - name: AdGuard Annoyances filter #AdGuard 阻止网页上的干扰性元素，包括 cookie 通知、第三方小部件和页面内弹出窗口。
+        uses: carlosperate/download-file-action@v2.0.2
+        with: 
+          file-url: https://filters.adtidy.org/extension/ublock/filters/14_optimized.txt
+          file-name: AdGuard_Annoyances_filter.txt
+
+      - name: AdGuard Annoyances Cookies #AdGuard 在网页上拦截 Cookie 通知，被包含在 AdGuard Annoyances filter 中。
+        uses: carlosperate/download-file-action@v2.0.2
+        with: 
+          file-url: https://filters.adtidy.org/extension/ublock/filters/18_optimized.txt
+          file-name: AdGuard_Annoyances_Cookies.txt
+
+      - name: AdGuard Popups filter #AdGuard 在网页上拦截弹窗通知，被包含在 AdGuard Annoyances filter 中。
+        uses: carlosperate/download-file-action@v2.0.2
+        with: 
+          file-url: https://filters.adtidy.org/extension/ublock/filters/19_optimized.txt
+          file-name: AdGuard_Popups.txt
+
+      - name: EasyList #面向全体用户的 EasyList 去广告规则
+        uses: carlosperate/download-file-action@v2.0.2
+        with: 
+          file-url: https://easylist-downloads.adblockplus.org/easylist.txt
+          file-name: EasyList.txt
+
+      - name: EasyList China #面向中文用户的 EasyList 去广告规则
+        uses: carlosperate/download-file-action@v2.0.2
+        with: 
+          file-url: https://easylist-downloads.adblockplus.org/easylistchina.txt
+          file-name: EasyList_China.txt
+
+      - name: EasyPrivacy #反隐私跟踪、挖矿规则
+        uses: carlosperate/download-file-action@v2.0.2
+        with: 
+          file-url: https://easylist-downloads.adblockplus.org/easyprivacy.txt
+          file-name: EasyPrivacy.txt
+      
+      - name: I dont care about cookies #屏蔽网站的 Cookies 警告
+        uses: carlosperate/download-file-action@v2.0.2
+        with: 
+          file-url: https://www.i-dont-care-about-cookies.eu/abp/
+          file-name: I_dont_care_about_cookies.txt
+          
+      - name: CJX's EasyList Lite #精简自 EasyList，保留了大量通用规则
+        uses: carlosperate/download-file-action@v2.0.2
+        with: 
+          file-url: https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjxlist.txt
+          file-name: CJX's_EasyList_Lite.txt  
+          
+      - name: CJX's Annoyance List
+        uses: carlosperate/download-file-action@v2.0.2
+        with: 
+          file-url: https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjx-annoyance.txt
+          file-name: CJX's_Annoyance_List.txt  
+          
+      - name: Xinggsf_rule #乘风通用广告过滤规则
+        uses: carlosperate/download-file-action@v2.0.2
+        with: 
+          file-url: https://raw.githubusercontent.com/xinggsf/Adblock-Plus-Rule/master/rule.txt
+          file-name: Xinggsf_rule.txt
+
+      - name: Xinggsf_mv #乘风视频广告过滤规则
+        uses: carlosperate/download-file-action@v2.0.2
+        with: 
+          file-url: https://raw.githubusercontent.com/xinggsf/Adblock-Plus-Rule/master/mv.txt
+          file-name: Xinggsf_mv.txt
+
+      - name: Xinggsf_minority-mv #乘风小众视频规则
+        uses: carlosperate/download-file-action@v2.0.2
+        with: 
+          file-url: https://raw.githubusercontent.com/xinggsf/Adblock-Plus-Rule/master/minority-mv.txt
+          file-name: Xinggsf_minority-mv.txt
+  
+      - name: Xinggsf_dynamic #乘风 uBlock Origin 动态规则
+        uses: carlosperate/download-file-action@v2.0.2
+        with: 
+          file-url: https://raw.githubusercontent.com/xinggsf/Adblock-Plus-Rule/master/ublock-dynamic-rule.txt
+          file-name: Xinggsf_dynamic.txt
+
+      - name: Commit Changes
+        env:
+          TZ: Asia/Shanghai
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then 
+              exit 0
+            else 
+              git add .
+              git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+              git config --local user.name "github-actions bot"
+              git commit -m ":pencil: Update at  $(date +"%Y-%m-%d %H:%M")" -a
+            fi
+
+      - name: GitHub Push #推送至库
+        uses: ad-m/github-push-action@v0.8.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
+
+          
+#      - name: WeChat notification #用于微信推送通知（如有需要删除行头注释）
+#        run: curl https://sc.ftqq.com/${{ secrets.ServerChan }}.send?text=${{ env.FILE_NAME }}AdBlock规则已更新
