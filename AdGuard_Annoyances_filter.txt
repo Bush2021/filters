@@ -1,6 +1,6 @@
 ![Adblock Plus 2.0]
-! Checksum: sXyujq2SZgz0OZ/PVsfObw
-! Diff-Path: ../patches/14_optimized/14_optimized-s-1729273022-3600.patch
+! Checksum: fOZETJeo2rTTjnuaRT9Pjw
+! Diff-Path: ../patches/14_optimized/14_optimized-s-1729305397-3600.patch
 ! Title: AdGuard Annoyances filter (Optimized)
 ! Description: Blocks irritating elements on web pages including cookie notices, third-party widgets and in-page pop-ups. Contains the following AdGuard filters: Cookie Notices, Popups, Mobile App Banners, Other Annoyances and Widgets.
 ! Version: 2.2.11.38
@@ -86,6 +86,7 @@
 ##.cookiefooter
 ##.tm-cookie-banner
 ##.consent-cookie
+##body > div.ns-cookie-consent
 ##.cookie123-popup
 ##.siteCookies[data-testid="cookiesPopup"]
 ##.consent-container
@@ -220,6 +221,7 @@
 ##.as-oil
 ###cookie_note
 ##.CookieNotifyWidget__wrapper
+##.voc-cookie-message
 ##body.sliding-popup-processed > #sliding-popup
 ##.divascookies
 ##.cookie-hint:not(body):not(html)
@@ -358,6 +360,7 @@
 ###cookieBanner
 ###cookieBar
 ###cookieBlock
+###cookieBnr
 ###cookieBox
 ###cookieCompliance
 ###cookieConsent
@@ -368,6 +371,7 @@
 ###cookieDisc
 ###cookieDisclaimer
 ###cookieDiv
+###cookieDivContent
 ###cookieDough
 ###cookieFooter
 ###cookieFrame
@@ -382,7 +386,6 @@
 ###cookieInformerBooklet
 ###cookieLY
 ###cookieLaw
-###cookieLawBox
 ###cookieLawText
 ###cookieLayer
 ###cookieMessage
@@ -815,6 +818,7 @@
 ##.cookiespolicy
 ##.cookiestrip
 ##.cookietext
+##.cookiewall:not(body):not(html)
 ##.cookiewarning:not(body)
 ##.ctl_CookieWarning
 ##.eu-cookies
@@ -1120,6 +1124,7 @@
 /cookienotice.
 /cookienotice/*$script
 /cookieNotification.
+/cookieok.js
 /cookiepolicy.
 /cookiepolicy/*
 /cookiepolicy_
@@ -1135,6 +1140,7 @@
 /cookies-policy/*
 /cookies_bar.js
 /cookies_komunikat.
+/cookies_policy.js
 /Cookies_Pro/*
 /cookiespolicy.
 /cookiesPopup.
@@ -1389,16 +1395,12 @@ kosik.cz#$#body[style*="padding-right:"] { padding-right: 0 !important; }
 dragon.cz,unihobby.cz##.cookies-confirm
 usaco.co.jp###consent_container
 ||rb.cz/attachments/applications/scripts/apps/cookie-wall.js
-palladiumpraha.cz#$#body { overflow: auto !important; }
-palladiumpraha.cz#$#.gc-App { display: none !important; }
 kvelektro.cz###__next > div[class^="css-"]:has(a[href="/stranka/pouzivani-cookie"])
 sconto.cz##.js-eu-co0k1es
 firstmedia.com##+js(set-local-storage-item, cookiesPolicyConsent, true)
 moebelix.cz#$#body { overflow: auto !important; padding-right: 0 !important; }
 moebelix.cz#$##modal { display: none !important; }
 5ka.ru##div[class^="src-patterns-Cookies-Cookies-module__container"]
-playactivate.com##.bg-space > aside.fixed.lg\:bottom-0:has(> .text-sky)
-community.hubspot.com###hs-banner-parent
 intramuros.org##+js(set-cookie, intramuros-cookie-consent, true)
 letgo.com##.cookie-policy-banner-wrapper
 unka.bilecik.edu.tr##+js(set-cookie-reload, .AspNet.Consent, yes)
@@ -1576,6 +1578,7 @@ cara.app###__next > .pointer-events-none > .items-center > .pointer-events-auto.
 vaughn.live##.modalv3_box
 vaughn.live###modalv3_overlay
 ||cdn.shopify.com/extensions/*/tiny-cookie.min.js
+firebase.blog###firebase-consent-banner
 myhome.ge###CookieAgreement
 govx.com##footer + div:has(> div[class^="jss"] > div[class^="jss"] > a[href="/privacyinfo#useOfCookies"])
 ||benq.eu/apps/*/clientlibs/clientlib-site/components/*-cookie*bar.min.
@@ -1587,6 +1590,8 @@ feelgrounds.com,feelgrounds.de#$#.disable-scroll { overflow: auto !important; }
 csob.sk#$##cookie-management { display: none !important; }
 csob.sk#$#body { overflow: auto !important; }
 findhow.org##.disclaimer-block
+myloview.*#$#body { overflow: auto !important; }
+myloview.*#$#.cookiesInfo__overlay { display: none !important; }
 spectrsad.com###cooks
 owndays.com##.od-cookies-popup
 zoho.com###bcc-outer
@@ -1680,6 +1685,7 @@ figma.com##div[aria-label="Cookie Consent"]
 zenmarket.jp###gdpr-terms-warning
 kuper.ru##div[class^="CookiesConcent_root"]
 istories.media##div[class*="cookieConsentBanner"]
+widilo.it##.widilo-cookie-rules
 ssstc.com,teamgroupinc.com##.privacyArea
 asp.wroc.pl##.cookie_info_asp
 bitget.com##.micro-cookie-dialog
@@ -2230,6 +2236,7 @@ abril.com.br##.LGPD-notice
 liga.net##.cookie-toast
 allmusic.com##.cookiePolicyBox
 flutter.dev##.cookie-snack
+kommunarkashop.by,kommunarka.by##.cookies-start
 premier.one##.m-notifications-container
 netology.ru##div[data-testid="cookies-module"]
 konkurent.ua##.popupCookie
@@ -2381,6 +2388,7 @@ plus500.com##+js(remove-attr, style, body[class])
 craftserve.pl#$##rodo { display: none !important; }
 craftserve.pl#$#.modal-backdrop { display: none !important; }
 craftserve.pl#$#body.modal-open { overflow: auto !important; padding-right: 0 !important; }
+librus.pl###js-cookie-bar
 tuya.com###_th-trust
 sushistory.com,orthomol.life,babelnet.org,krka.biz,7news.com.au##div[class^="cookie-"]
 onlinegibdd.ru###gritter-notice-wrapper
@@ -2467,6 +2475,7 @@ architekturaibiznes.pl###popupzgody-wrapper-main
 bpi.com.ph##.privacypolicy-position
 web.webex.com#?#p[data-test="cookie-banner-message"]:upward(1)
 myshopify.com,quantumleapfitness.de,sanctum.shop,nakedoptics.net,tartanblanketco.com#$#body { overflow: auto !important; }
+gov.wales###wg_cookie
 redd.it##reddit-cookie-banner
 trucksbook.eu#$#.modal-backdrop { display: none !important; }
 trucksbook.eu#$#body #cookieModal { display: none !important; }
@@ -2571,10 +2580,10 @@ gim-international.com,mein-zaunshop.de,gartengeraete-onlineshop.de##div[x-data*=
 geely.com##.cookie-protocol
 calendar.com##.w-full.bg-white.fixed.z-50
 telekom.hu###frame-modals
-rotterdam.nl#?#body > div[class^="styles_grid__"]:has(> div[class*="styles_cookieContentWrapper__"])
 oslosportslager.no##.footerCurtainCookie
 mediamarkt.nl##div[class^="sc-"]:has(> div[data-test="mms-content-consent-section"])
 gamer.nl#$#body { overflow: auto !important; }
+gazetememur.com###cb-cookie-banner
 sahadan.com,mackolik.com##.cookie-consent-rectangle-wrapper
 wionews.com,zeenews.india.com###cookiepolicy-wrap
 transkriptor.com,longdo.com##.consent-div
@@ -2954,6 +2963,7 @@ postbank.de#$#body.overflowHidden { overflow: auto !important; }
 nembus.ru#$#.modals__overlay { display: none !important; }
 nembus.ru#$#body { overflow: auto !important; }
 ixbt.games,ixbt.com##.gdpr-root
+gigasport.at,gigasport.de,gigasport.ch#$#body { overflow: scroll !important; overflow-x: hidden !important; }
 studentenwerk-dresden.de#$##cookieconsent { display: none !important; }
 studentenwerk-dresden.de#$#body { margin-right: 0 !important; overflow: auto !important; }
 ||wp.pl^$script,domain=dobregry.pl|nauka.rocks
@@ -3001,6 +3011,7 @@ jazztel.com#$#html { overflow-y: auto !important; }
 prada.com##+js(remove-class, stopScrollPrada, html.stopScrollPrada)
 prada.com#$#body[class*=stopScrollPrada] { position: static !important; }
 ||tags.tiqcdn.com/utag/*/prod/utag.js$domain=hs.fi|radissonhotels.com|louisvuitton.com|simplybusiness.co.uk|vivimilano.corriere.it|lineadirecta.com|modernatx.com|totaljobs.com
+sketch.metademolab.com###root > div[style^="position: fixed; left:"][style*="z-index:"]
 super-hobby.co.uk,super-hobby.de,super-hobby.be,super-hobby.at,super-hobby.it,super-hobby.pt,super-hobby.es,super-hobby.com,mojehobby.pl###_message-footer-close
 ||blu.com.pl/modules/sohoshopcookies/
 ning.com###banner_top_cookie
@@ -3011,6 +3022,7 @@ domrfbank.ru##.announce-cookie
 7days.ru##.the-cookie
 balarm.it##.cyn-banner
 perekrestok.ru#?#footer p.cookie-text:upward(1)
+supermicro.com###privacy-popup-agree
 blogspot.com###supermag-cookie-ify
 joom.com###content > div[class^="container_"][class*="bottom"]
 incrypted.com##.incrypted-cookie-bar
@@ -3105,6 +3117,7 @@ gametracker.com###cookieconsent_dialog
 topographic-map.com#$##template { filter: none !important; }
 topographic-map.com#$#body { overflow: auto !important; }
 loopearplugs.com##+js(remove-class, cc-scrolling-disabled, body)
+hootsuite.com###__next > div[class^="sc-"]:last-child > div[class^="sc-"]:only-child
 x.ai,udacity.com##section[class^="cookie-banner_"]
 ebarafoods.com##.consent_c
 namesilo.com###cookies-consent-section
@@ -3158,6 +3171,7 @@ supermuffato.com.br###box_lgpd_cookie
 as.com#$#body { overflow: auto !important; }
 as.com#$##didomi-host { display: none !important; }
 fastpeoplesearch.com###gdpr-cookie-footer
+||flipdish-cookie-consent.s3-eu-west-1.amazonaws.com^
 3ple.jp###layer_board_area
 ||webaslan.com/_js/consent_check.php
 kankocho.jp##.footer-pilicy-attention
@@ -3288,6 +3302,8 @@ readly.com#$#body { overflow: auto !important; }
 beko.com#$#body { overflow: auto !important; }
 ikea.com.cy###required-cc
 ikea.com.cy##.nvcookies
+unitedutilities.com#$#.c-cookie-preferences { display: none !important; }
+unitedutilities.com#$#.no-scroll { overflow: auto !important; }
 footlocker.com###touCta
 got-it.ai##.gi-Cookie
 lafoy.ru##.ce-banner
@@ -3317,6 +3333,7 @@ love.ru###gdpr_popup
 grin.com,11880.com,golocal.de,login.muenchen.de,rehau.com,autopay.pl,olympia-einkaufszentrum.de,hrt.hr,bosnainfo.ba,eventim.de,swm.de###cmpboxrecall
 danskebank.co.uk#$#body { overflow: auto !important; }
 danskebank.co.uk#$#.cookie-consent-banner-modal { display: none !important; }
+bet365.com##.CookieConsent__Wrapper
 ||say-move.org/style/js/gdpr/
 ||kunststoffweb.de/*/consent-management/*/init_consent.js
 hardx.com,21sextury.com###ConsentCookiePopup
@@ -3324,6 +3341,7 @@ t-mobile.com#$#body { overflow: auto!important; }
 timhortons.co.uk##.user-permission
 tescobank.com#$#body { overflow: auto !important; }
 starlingbank.com#?#body > div[data-focus-lock-disabled]:has(> div[role="dialog"] > div[class] > h3)
+kern-haus.de#$#body { overflow: auto !important; }
 trekitt.co.uk###GDPRCookieBox
 parking.spb.ru###user-agreement-notify
 dunelm.com#$#div[data-testid="cookie-consent-modal-backdrop"] { display: none !important; }
@@ -3349,6 +3367,7 @@ poste.it###avviso_cookie
 minecraft.tools,opensocietyfoundations.org##div[c_data="c_cookie_main"]
 petenkoiratarvike.com,intergastro.de#$#body { overflow: auto !important; }
 ortobom.com.br###aceitaCookies
+/scripts/cookie-consent-$domain=lepictorium.fr|agence-lepictorium.com|univie.ac.at
 salomon.com#$#div[aria-label^="Cookie"] { display: none !important; }
 salomon.com#$#body[style^="overflow:"] { overflow: auto !important; padding-right: 0 !important; }
 salomon.com#$#html[style*="overflow"] { overflow: auto !important; }
@@ -3380,6 +3399,7 @@ ibispaint.com###agreementPane
 teufel.de#$#.data-privacy-layer-visible { overflow: auto !important; }
 teufel.de#$#.data-privacy-layer-visible body { scrollbar-gutter: auto !important; }
 /resources/cookie/onetrust/scripttemplates/*/otBannerSdk.js$domain=myspreadshop.fr|spreadshirt.fr
+shoplando.gr,evshop.com.tr,onb.ac.at##.notification-wrapper
 ign.com,speedtest.net###zdcFloatingBtn
 companyofheroes.com###cookies-settings
 companyofheroes.com##div[id^="privacy-policy-"]
@@ -3459,6 +3479,7 @@ green.ch##div[data-nezzo-cookie]
 grueneerde.com#$#html[class].Overlayed { overflow: visible!important; }
 scribd.com,americastestkitchen.com,clickorlando.com,telesign.com,unstoppabledomains.com##.osano-cm-window__dialog
 flightview.com###eea-confirmation-outer
+pc-canada.com,tech-america.com##div[x-data^="xCookiePopup"]
 wykop.pl,cire.pl#$#body[style*="overflow"] { overflow: auto !important; }
 set.or.th##.cookies-pdpa
 matichonacademy.com,matichonweekly.com,prachachat.net,sentangsedtee.com,silpa-mag.com,technologychaoban.com,matichon.co.th,khaosod.co.th,khaosodenglish.com###pdpa-popup
@@ -3505,6 +3526,7 @@ ncsoft.jp###ncCookieAlert
 medizinfuchs.de,medizinfuchs.at##.ConsentHint
 bike.shimano.com##.cmp-cookies-notification
 wirexapp.com##wx-cookie-policy-notification
+||compliance-pack.carlsberggroup.com/cbgCConsent.js
 ||cmp.netatopi.jp^
 ||cmp.impress.co.jp^
 khronos.org###cookie_decline
@@ -3811,6 +3833,9 @@ adulttime.com##.CookieConsent-Window
 microsoft.com###cookie-consent-markup
 cricbuzz.com##.feedback-bar
 befirst.info##.p-cookies
+loebbeshop.de#$#body { overflow: auto !important; padding-right: 0 !important; }
+loebbeshop.de#$##cookie-manager-window { display: none !important; }
+loebbeshop.de#$##cookie-manager-window ~ div.modal-backdrop { display: none !important; }
 design-homes.ru##.politika
 red-by-sfr.fr,sfr.fr###CkC
 wetv.vip##.cookie_uneu_banner
@@ -3850,9 +3875,11 @@ cardmarket.com###CookiesConsent
 fidelity.de##.fil-cookie-policy
 seudinheiro.com###agreement-cookies
 dizioneri.com,samokat.ru,alfazdrav.ru###modalcookie
+tynker.com##cookie-settings
 ale.pl,alpinstore.com###acb-banner
 audiolibrix.com,synodalerweg.de,volksbund.de,fairtrade-deutschland.de,esef-manager.eu,ebilanzonline.de,bundesanzeiger-verlag.de,bistumlimburg.de,bistum-essen.de###cc
 migros.com.tr,tazedirekt.com,macrocenter.com.tr##fe-product-cookie-indicator
+thousandeyes.com###EU-wrapper
 cleanmymac.com##.bottom-banner
 tresorit.com##footer + aside
 nostter.app,todtv.com.tr,cryptonews.com,duellinksmeta.com##.cookieConsentWrapper
@@ -3875,6 +3902,7 @@ gimletmedia.com##.persistent-banner[data-banner-name="terms-2020"]
 sunrise.ch###cookieBanner-gdpr
 eon-highspeed.com#$##dmc-cc { display: none !important; }
 eon-highspeed.com#$#body.model--open { overflow: visible !important; }
+ausschreiben.de,viel-unterwegs.de,zeitgeist-online.de,kern-haus.de,diewebsitemacherei.de,effizienzhaus-online.de,daemmen-und-sanieren.de,maler-vergleich.com,kartonmodellbau.de,wvv.de##.ccm-root
 nuuvem.com##.consent-warning
 aps.org##div[class^="app__cookie-footer"]
 reolink.com##.reo-float-wrap-left-bottom
@@ -3934,6 +3962,7 @@ autoteiledirekt.de#$#.overlay { display: none !important; }
 bausep.de#$#body { position: static!important; overflow: visible!important; }
 reachout.com##.container--notification-global
 mystudylife.com,shadowcore.ru,activex.com.tr,learncab.com##.pix-cookie-banner
+pixelprivacy.com##.pp-disclosure-notice
 algonquincollege.com###accn-cookie-notice
 ferchau.com##.modal
 citilink.ru##.PersonalDataConfirm
@@ -4238,6 +4267,7 @@ bmel.de#$#html { overflow: visible !important; }
 bmel.de#$#body > div[class^="mfp-"] { display: none !important; }
 tippmix.hu,fullbay.com,marksandspencer.com,tippmixpro.hu,szerencsejatek.hu,daemmen-und-sanieren.de,solaranlagen-portal.com##.cookie-consent-modal
 newworld.com,amazongames.com###ags-CookieDisclaimer
+test-help.com##.ui-pnotify.stack-bottomleft
 planet-beruf.de##.coo-con
 electronic.us,cloudmounter.net,eltima.com##.float-message__wrap
 rua.gr,audacityteam.org,fumetsu.pl,uqwimax.jp,7labs.io###consent-popup
@@ -4462,6 +4492,7 @@ create.vista.com,crello.com##div[class^="footerNotificationWrapper-"]
 disk-o.cloud##div[class^="src-ui-Cookie-Cookie_"]
 hellobank.fr###nextoutils_gestionCookies
 cabify.com###cmcb-informationLayer
+httpstatus.io##.snackbar.is-bottom-right
 tvzvezda.ru##.cookie_messege
 speedof.me#$#.cc-dialog-pane { display: none !important; }
 speedof.me#$#.cc-window-banner { display: none !important; }
@@ -4497,7 +4528,6 @@ govdelivery.com###gdpr-cookie-policy
 prazdnik.vkusvill.ru,zadarma.com,bombora.ru##.cookie-tooltip
 drawnames.com.sg,drawnames.de,drawnames.co.uk,drawnames.com,lootjestrekken.nl###cookie-backdrop
 evbazaaravm.com,meupc.net##.cc-notification
-nestoria.com.br##.wrap-cookies-desktop
 lifepointspanel.com#$##cookie-modal-box { display: none !important; }
 lifepointspanel.com#$#body.modal-open { overflow: auto !important; padding-right: 0 !important; }
 bookvoed.ru###cookieNoticeUser
@@ -4509,7 +4539,6 @@ lotto.pl#$#.privacy-popup { display: none !important; }
 holidu.at,holidu.ch,holidu.ie,holidu.ca,holidu.com.au,holidu.co.nz,holidu.fr,holidu.be,holidu.nl,holidu.es,holidu.dk,holidu.it,holidu.se,holidu.no,holidu.pl,holidu.pt,holidu.com.br,holidu.com.mx,holidu.co.uk,holidu.de,holidu.com###cookie-selector
 edifier.ru,neonet.pl##div[class^="cookiesBlock"]
 ||privacy.selbst.de^
-partnersbanka.cz,magazine.aldi-nord.de,leaflets.kaufland.com##.c-cookieconsent
 fashionid.de,peek-cloppenburg.*#$#body { overflow: auto !important; position: unset !important; }
 simbrief.com,gorillas.io,trust.com###cookie-settings
 patek.com#$#nav.main_navigation.cookies { top: 0 !important; }
@@ -4990,7 +5019,6 @@ inquirer.net##.qni-cookmsg
 realme.com#$#.r-cookie { display: none !important; }
 realme.com#$#body { overflow: visible !important; }
 donationalerts.com##.s-cookies-warning
-rarus.ru##.section__policy
 rus.tvnet.lv,bangkokbiznews.com,thansettakij.com,komchadluek.net,springnews.co.th,nationtv.tv,tnews.co.th,elu24.ee##.sticky-cookie
 unimelb.edu.au##.tealium_privacy_prompt
 westjet.com##.wj-header-usercookies
@@ -5133,6 +5161,7 @@ kugeln.io,nurxxx.mobi##.msgCookie
 mtvuutiset.fi##.mtvcookienotificationscontainer
 wifire.ru##.nbn-cookie-info
 xenforo.info,cmteampk.com,macuser.de,head-fi.org,realitycheats.com,hobby-machinist.com,safezone.cc##.notices--bottom_fixer
+cengizlermarket.com,pricelulu.co.uk,teknotalk.com,pekcazip.com,ozbaymobilya.com,checkdomain.de,checkdomain.net##.notification-wrapper-bottom
 techbang.com##.notify_stickie
 create.vista.com,shephardmedia.com,roosterteeth.com##.policy-banner
 jetradar.com,hotellook.com,kongregate.com##.policy-bar
@@ -5167,6 +5196,7 @@ macpaw.com##div[data-banner="cookies"]
 friday.ru##div[data-block-closer-storage="cookie"]
 etsy.com##div[data-etsy-promo-cookie-expires]
 etsy.com##div[data-gdpr-consent-prompt]
+magazin.com,manufactum.de##div[data-test-sell-cookie-banner]
 epdf.tips##div[id$="_cookie_box"]
 ancestry.com##div[id^="Banner_cookie"]
 foodnetwork.co.uk#$#body { overflow: visible!important; }
@@ -6270,6 +6300,7 @@ gadgethacks.com##+js(set-constant, WHT.ShowConsentForm, trueFunc)
 afjord-sparebank.no,andebu-sparebank.no,aurskog-sparebank.no,berg-sparebank.no,bien.no,birkenes-sparebank.no,bjugn-sparebank.no,dengulebanken.no,eh-sparebank.no,eika.no,esbank.no,etnedalsparebank.no,gildeskaal-sparebank.no,grong-sparebank.no,gruesparebank.no,haltdalensparebank.no,hegrasparebank.no,hemnesparebank.no,hjartdalbanken.no,hjelmeland-sparebank.no,hsbank.no,jaerensparebank.no,jbf.no,kvinesdalsparebank.no,larvikbanken.no,marker-sparebank.no,melhusbanken.no,nordirekte.no,oasparebank.no,odal-sparebank.no,oppdalsbanken.no,orklasparebank.no,orskogsparebank.no,oslofjordsparebank.no,rindalsbanken.no,romsdalsbanken.no,rorosbanken.no,rsbank.no,skagerraksparebank.no,skuesparebank.no,sn.no,sognbank.no,soknedal-sparebank.no,strommensparebank.no,sunndal-sparebank.no,tinnbank.no,totenbanken.no,tsbank.no,tysnes-sparebank.no,valdressparebank.no,valle-sparebank.no,vekselbanken.no##+js(set-cookie, eika_consent_analytics, true)
 afjord-sparebank.no,andebu-sparebank.no,aurskog-sparebank.no,berg-sparebank.no,bien.no,birkenes-sparebank.no,bjugn-sparebank.no,dengulebanken.no,eh-sparebank.no,eika.no,esbank.no,etnedalsparebank.no,gildeskaal-sparebank.no,grong-sparebank.no,gruesparebank.no,haltdalensparebank.no,hegrasparebank.no,hemnesparebank.no,hjartdalbanken.no,hjelmeland-sparebank.no,hsbank.no,jaerensparebank.no,jbf.no,kvinesdalsparebank.no,larvikbanken.no,marker-sparebank.no,melhusbanken.no,nordirekte.no,oasparebank.no,odal-sparebank.no,oppdalsbanken.no,orklasparebank.no,orskogsparebank.no,oslofjordsparebank.no,rindalsbanken.no,romsdalsbanken.no,rorosbanken.no,rsbank.no,skagerraksparebank.no,skuesparebank.no,sn.no,sognbank.no,soknedal-sparebank.no,strommensparebank.no,sunndal-sparebank.no,tinnbank.no,totenbanken.no,tsbank.no,tysnes-sparebank.no,valdressparebank.no,valle-sparebank.no,vekselbanken.no##+js(set-cookie, eika_consent_marketing, true)
 afjord-sparebank.no,andebu-sparebank.no,aurskog-sparebank.no,berg-sparebank.no,bien.no,birkenes-sparebank.no,bjugn-sparebank.no,dengulebanken.no,eh-sparebank.no,eika.no,esbank.no,etnedalsparebank.no,gildeskaal-sparebank.no,grong-sparebank.no,gruesparebank.no,haltdalensparebank.no,hegrasparebank.no,hemnesparebank.no,hjartdalbanken.no,hjelmeland-sparebank.no,hsbank.no,jaerensparebank.no,jbf.no,kvinesdalsparebank.no,larvikbanken.no,marker-sparebank.no,melhusbanken.no,nordirekte.no,oasparebank.no,odal-sparebank.no,oppdalsbanken.no,orklasparebank.no,orskogsparebank.no,oslofjordsparebank.no,rindalsbanken.no,romsdalsbanken.no,rorosbanken.no,rsbank.no,skagerraksparebank.no,skuesparebank.no,sn.no,sognbank.no,soknedal-sparebank.no,strommensparebank.no,sunndal-sparebank.no,tinnbank.no,totenbanken.no,tsbank.no,tysnes-sparebank.no,valdressparebank.no,valle-sparebank.no,vekselbanken.no##+js(set-cookie, eika_consent_set, true)
+stockmann.com#$#body { position: static!important; }
 !+ NOT_OPTIMIZED
 adguard.info,adguard.com,adguard.app##.hello_from_adguard_annoyances_cookies
 @@||cdn.cookielaw.org/scripttemplates/otSDKStub.js$domain=hollywoodreporter.com|resmed.com|southpark.de|movistar.es|redbull.com|all.accor.com|karriere.mcdonalds.de|blaklader.*|wallapop.com|rts.ch|npr.org|upc.pl|next.co.uk|zoom.us|rtlplay.be|motorsport-total.com|player.pl|mensjournal.com|gqmagazine.fr|nintendo.*|mtv.com|ryobitools.eu|cc.com|3sat.de|zdf.de|costco.com|giantbomb.com|glovoapp.com|rte.ie|digitaltrends.com|spiele.bild.de|spiele.stern.de|vanityfair.com|saarbruecker-zeitung.de|olympics.com|tvn.pl|bergfreunde.de|oe24.at|epicgames.com|toteraz.pl|natgeotv.com|midomi.com|volksfreund.de|kawasaki.com|ga.de|shop.mango.com|kralmuzik.com.tr|westernunion.com|roastmarket.de|new.cappex.com|vimeo.com|heute.at|ntv.com.tr|wargaming.net|metacritic.com|gq-magazine.co.uk|viafree.dk|viafree.fi|viafree.no|viafree.se|glamour.de|cbsnews.com|worldoftanks.ru|vg247.com|newyorker.com|games.miamiherald.com|eurogamer.es|eurogamer.de|bet.com|ikonpass.com|mcdelivery.de|id.trimble.com|skateboarding.transworld.net|newegg.com|docs.vmware.com|udemy.com|olx.pl|usmagazine.com|uefa.com|milwaukeetool.eu|muscleandfitness.com|20min.ch|ted.com|elisa.fi|nhl.com|porn300.com|indiewire.com|victorinox.com|darkreading.com|trustradius.com|start.gg|geappliances.com|popeyes.com|channel5.com|bigbearmountainresort.com|quora.com|vod.pl|blick.ch|elle.com|teenvogue.com|vogue.co.jp|vogue.co.uk|vogue.com|vogue.com.tw|vogue.de|vogue.es|vogue.fr|vogue.in|vogue.it|vogue.mx|vogue.ph|tvnturbo.pl|superporn.com|thebump.com|bk.com|safeway.com|motor1.com|southparkstudios.com.br|southpark.lat|southparkstudios.com|realsimple.com|538.nl|skyradio.nl|radio10.nl|radioveronica.nl|homedepot.ca|wired.com|europapark.de|jdpower.com|bonava.lv|nick.com|mtvema.com|mtv.co.uk|mtv.de|mtv.it|themessenger.com|nickjr.com|lnw.com|otodom.pl|irishtimes.com|tntsports.com.br|sonos.com|rossmann.pl|rentcafe.com|seriouseats.com|bhg.com|gamescom.global|championsleague.basketball
@@ -7031,6 +7062,7 @@ rainfordsolutions.com#@##cookieModal
 merkur.si#@#.cookie-notice-wrapper
 merkur.si#@#.cookie-notice:not(body):not(html)
 @@||sdk.privacy-center.org^$domain=20minutes.fr
+@@||tutanota.com/blog/posts/
 @@||cdn-ukwest.onetrust.com^$domain=skyshowtime.com
 @@||consent.trustarc.com/notice$domain=tripit.com
 @@||consent.trustarc.com/asset/$domain=tripit.com
@@ -9345,6 +9377,7 @@ pisupisu.pl###bear_wrap
 torrentgalaxy.to,torrentgalaxy.mx###blockalert
 xhspot.com,xhwide5.com,xhchannel.com,xhchannel2.com,xhtotal.com,xhtree.com,xhwide2.com,xhlease.world,xhamsterporno.mx,xhxh3.xyz,valuexh.life,xhdate.world,xhtab4.com,xhbranch5.com,galleryxh.site,xhbig.com,xhaccess.com,xhofficial.com,seexh.com,xhamster42.desi,xhvid.com,xhtab2.com,xhamster20.desi,xhamster19.desi,xhwebsite2.com,xhamster18.desi,xhadult3.com,xhadult2.com,xhmoon5.com,xhwide1.com,xhamster3.com,xhplanet2.com,megaxh.com,xhamster16.*,hamsterix.*,xhamster.com,xhamster2.com,xhamster7.com,xhamster8.com,xhamster9.com,xhamster10.com,xhamster12.com,xhamster13.*,xhamster14.com,xhamster15.com,xhamster17.*,xhamster18.*,xhamster19.com,xhamster1.desi,xhamster2.desi,xhamster3.*,xhamster4.desi,xhamster20.com,xhamster22.com,xhamster23.com,xhamster25.com,xhamster26.com,xhamster27.com,openxh.com,xhamster31.com,xhamster32.com,xhamster34.com,xhamster36.com,xhamster37.com,xhamster38.com,xhamster5.desi,xhopen.com,openxh1.com,xhamster39.com,xhamster40.com,xhamster.one,xhamster.desi,stripchat.com##aside[data-role$="ab-message"]
 animefenix.tv###my-modal
+olarila.com##.__b-popup1__ + div.esPopupWrapper
 baomidou.com##body > div[style^="position: absolute; top: 0px; left: 0px; width: 100%;"]
 myfxbook.com##+js(no-setTimeout-if, showAd)
 op.gg##body > div[style^="bottom: 0px; left: 0px; position: fixed;"]
@@ -9739,6 +9772,7 @@ whatfontis.com##+js(no-setTimeout-if, bottomad)
 wikihow.com##+js(set-constant, _ads, true)
 wvgazettemail.com,trib.com,sonyliv.com#$#.pub_300x250.pub_300x250m.pub_728x90.text-ad.textAd.text_ad.text_ads.text-ads.text-ad-links { display: block !important; }
 wvnews.com##+js(set-constant, __tnt.advertisements, noopFunc)
+xatakaciencia.com,xatakamovil.com,xatakawindows.com,genbeta.com##.js-img-adb
 xclient.info###abptip
 xgp.pl##+js(set-constant, advanced_ads_pro.adblocker_active, false)
 yellowbridge.com#$?##pgFooterM { remove: true; }
@@ -10415,7 +10449,6 @@ talkai.info##.popup-chat.popup-login
 freedium.cfd##+js(set-local-storage-item, showNotification-buymeacoffe-ban-block, false)
 community.hubspot.com##div[aria-label="Feedback for community"]
 community.hubspot.com##div[aria-label="Feedback for community"] ~ div.ui-widget-overlay
-klerk.ru##div:has(> div[class^="print"] > a[href^="https://klerk.info/thanks/"])
 blog.platformatic.dev##+js(set-constant, IntersectionObserver, undefined)
 perplexity.ai##+js(set-session-storage-item, signUpBannerDismissed, false)
 perplexity.ai##+js(set-session-storage-item, shouldShowAuthBannerAfterQuery, true)
@@ -10487,6 +10520,7 @@ freetp.org#$#.bottom-bar { display: none !important; }
 freetp.org#$#body { padding-top: 50px !important; }
 nativecamp.net##div[class$="-bottom-link-banner"]
 open.spotify.com##div[data-testid="signup-bar"]
+mega.nz###mainlayout > .psa-holder > .banner.anouncement:has(> .content-box > button[data-continue-link*="/features-update-"])
 teb.com.tr##+js(set-cookie-reload, MarifetBanner, true)
 otvfoco.com.br###modalPushArticle
 jpsk.jp###footer-popup
@@ -11048,6 +11082,7 @@ alitools.io##.motivation.modal
 sparknotes.com#$##modal-snpromo { display: none !important; }
 sparknotes.com#$#html { overflow: auto !important; }
 spb.napopravku.ru##.sticky-appointment-button__container
+lucy.ne.jp##.banner-seminar
 1password.com##div[data-testid="alert-banner"]
 legrandcontinent.eu##.disposableBanner
 techcommunity.microsoft.com##.ui-dialog:has(.survey-prompt-dialog)
@@ -11166,6 +11201,7 @@ agents.media###telegramModal
 community.usa.canon.com##.lia-panel-dialog
 community.usa.canon.com##.ui-widget-overlay
 opendemocracy.net##.donate__sticky-banner
+realestate.yahoo.co.jp##.StickyBanner--open.target_modules
 medical.nikkeibp.co.jp,pet-info.event.rakuten.net###floating-banner
 sbccpatterns.com,musicfestivalwizard.com##div[data-ff-type="popup"]
 imgcreator.zmo.ai##+js(set-local-storage-item, dontShow, true)
@@ -11175,6 +11211,7 @@ marshmallow-qa.com#$#body[style^="overflow: hidden"] { overflow: auto !important
 drive.google.com##.a-da-ub-ce
 exxpress.at##.live-tv-holder
 imdb.com##+js(set-session-storage-item, coachmarkShown, true)
+pandahelp.vip##.ac-popup-container
 coindesk.com##div[type="event-banner"]
 aspor.com.tr###contactLink
 cnet.com###video-rectangle
@@ -11280,6 +11317,7 @@ qodeinteractive.com##+js(addEventListener-defuser, wheel)
 gazetaprawna.pl,dziennik.pl##.videoScroll > div
 stocktwits.com##div[class^="LoginSignupBanner"]
 livescore.com##div[id^="announcement-banner"]
+biletix.com#$#body.modal-open { overflow: auto !important; }
 biletix.com#$#.ui-widget-overlay { display: none !important; }
 biletix.com#$#div[aria-describedby="adddialog2"] { display: none !important; }
 zhihu.com,zhuanlan.zhihu.com##.css-1ynzxqw
@@ -11503,6 +11541,7 @@ takashimaya.co.jp##.l-header__banner
 manabi.benesse.ne.jp##.adsenseWrap
 gilt.com,legionathletics.com,view-next.benesse.jp#$#.remodal-overlay { display: none !important; }
 gilt.com,legionathletics.com,view-next.benesse.jp#$#.remodal-wrapper { display: none !important; }
+steamgriddb.com###noty_layout__bottomLeft
 iqihang.com##.home-float
 iqihang.com##.v-modal
 search.yahoo.co.jp##.sw-Perorin
@@ -11537,7 +11576,10 @@ intellinews.com##+js(set-cookie, viewedOuibounceModal, true)
 auslogics.com###b-instruction-2__shadow
 ledkia.com##.modal-backdrop
 park.ajinomoto.co.jp##.bottomMenu
+sougiya.biz##.sideBanner
+sougiya.biz##.sw-Footbn
 mail.yahoo.co.jp#?#.main > div[class] > svg + div[class] > a[title=""][font-size="14"]:upward(2)
+letemps.ch#$#html > body.tp-modal-open { overflow: auto !important; }
 microsoftstore.com.cn##.modals-overlay
 shop.lenovo.com.cn##.mask-laye-box
 shop.lenovo.com.cn##.sign-in-box
@@ -11579,6 +11621,7 @@ ruten.com.tw##div[class^="ruten-event"]
 dropbox.com##.top-notification-bar-container
 researchgate.net##.lite-page-tooltip__content
 www-aljazeera-com.cdn.ampproject.org,aljazeera.com##.container--red
+qwertee.com##.modal
 imobie.jp##.sideadv_wrapmc
 sex-or-never.com,3nenbkumi-chinpachisensei.net,naga-ken.info,dohack.jp,re-lifework.com##.bfb_textTextBtn
 pogoda.interia.pl##.inpl-tout-sticky.body__common-header--fixed .vjs-fixedmonitor-wrapper-fixed
@@ -11603,6 +11646,7 @@ dmarket.docomo.ne.jp##.fltBnrWrap
 rigla.ru##.popup-metadata-popup__paranja
 healthylives.tw##div[style*="position: fixed"][style*="z-index"][style*="height:"][style*="height:"]:not([class]):not([id])
 auto.ru#?#body > div:has(> div.Modal > div.Modal__container > div[class*="AdminsMarketingPopup__wrapper"])
+auto.ru#$#div[role="button"][class="Backdrop"] { display: none!important; }
 auto.ru#$#body { overflow: auto!important; }
 magazine.tabelog.com##.tm-floating-banner
 managertoday.com.tw##.mtaa
@@ -11656,7 +11700,6 @@ mysuki.jp,how-to-inc.com###sp-cta
 cableav.tv##+js(abort-on-property-read, Object.prototype.video_player_floating)
 agoda.com##.ModalPortal
 moqups.com,x.gd##.notice
-banco.bradesco##.btnAbraContaFixed
 tsargrad.tv##.sticky-bottom
 facebook.com,facebookwkhpilnemxj7asaniu7vnjjbiltxjqhye3mhbshg7kx5tfyd.onion##+js(addEventListener-defuser, scroll, showPopup)
 magazine.jp.square-enix.com#$#html { overflow: auto !important; }
@@ -11668,6 +11711,7 @@ highload.today#?#.popup-bottom:has(> .container .popup-bottom-social)
 academicearth.org##+js(set-cookie, intModalViewed, true)
 jbpress.ismedia.jp,5-fifth.com,spravochnick.ru##.m-popup
 niutrans.com##.sidebar.slider
+oceans-nadia.com#$#html[style="overflow: hidden;"] { overflow: auto !important; }
 oreilly.com##.exitIntentOverlay
 u.pcloud.link#$#div[class^="Modal__FadeTranstionContainer"] { display: none!important; }
 u.pcloud.link#$#html.g-modal-open { overflow: auto!important; }
@@ -11893,6 +11937,7 @@ usnews.com#$#div[class*="ModalWrapper__BigBox-"] { display: none!important; }
 usnews.com#$#body { overflow: visible!important; }
 economictimes.indiatimes.com##.btmTitleBox[style*="position: fixed;"]
 economictimes.indiatimes.com##.stickyBand
+findaphd.com#$##signupModal { display: none !important; }
 findaphd.com#$#.modal-backdrop { display: none !important; }
 findaphd.com#$#body { overflow: visible !important; padding-right: 0 !important; }
 bau-welt.de,sugargang.com,sugardad.eu##.modal--newsletter
@@ -11998,6 +12043,7 @@ meindirektlabor.de#$#html { overflow: visible!important; position: static!import
 talkspace.com#$##assessment-modal { display: none!important; }
 talkspace.com#$#.modal-backdrop { display: none!important; }
 talkspace.com#$#body { overflow: visible!important; }
+talkspace.com##div[id^="vwo-widget-"]
 cifrus.ru##+js(set-cookie, subbanner, true)
 scanwp.net#$#body { overflow: auto !important; }
 scanwp.net#$##bio_ep_bg { display: none !important; }
@@ -12152,6 +12198,7 @@ searchenginewatch.com#$#body { overflow: auto!important; margin-right: 0!importa
 positivepsychology.com#$#body { overflow: visible !important; padding-right: 0 !important; }
 wikihow.com###article_courses_banner
 support.microsoft.com###supWrapperToPreventFeedbackFlickering
+wfmz.com,dailyrecordnews.com###promo-designer-modal-custom-pop
 yahoo.com##.wafer-tooltip-wrapper
 nu.nl#$?#body { overflow: visible !important; }
 ||fastestvpn.com/js/saveBig.js
@@ -12225,6 +12272,7 @@ myfin.by#$#.credit-modal { display: none!important; }
 myfin.by#$##request-mass-modal { display: none!important; }
 myfin.by#$#body { overflow: visible!important; }
 ||hbr.org/resources/js/components/overlay-intromercial/
+realestate.yahoo.co.jp###_shp_bnr.FixedBox__fixedInfoBox
 timeout.com##div[class^="_overlay"][data-component="popup-newsletter"]
 byjus.com##.ask-ques-mobile-bottom-button
 touristik-aktuell.de,zinspilot.de,fussball.com,ionos.it,giardiniblog.it#$#body { overflow: auto !important; }
@@ -12249,6 +12297,7 @@ troypoint.com#$#html { overflow: visible !important; }
 open-minds.it,iptvwire.com,my-stuwe.de,udemydownload.com##.cp-popup-container
 wowcircle.com,wowcircle.net##.banner-corner
 wowcircle.com,wowcircle.net##.guestwarn
+fctables.com#$##modal_mailing { display: none!important; }
 fctables.com#$#body { overflow: visible!important; }
 markmanson.net#$##exit-modal { display: none!important; }
 markmanson.net#$#body { overflow: visible!important; }
@@ -12716,12 +12765,14 @@ folha.uol.com.br###corner_box
 ||ubembed.com^$domain=brokerdeal.de|bulbapedia.bulbagarden.net|pctipp.ch|computerworld.ch
 armani.com##.uiLayer-newsletterLink
 cosmopolitan.fr,magazine-avantages.fr,magicmaman.com,marieclaire.fr##.MagazineSubscription-popin
+votzaraza.ru###popupwindow
 azerbaycan24.com##body > #ouibounce-modal
 timeout.jp,digitalcamerawarehouse.com.au,marketrealist.com,columbiaspectator.com###PopupSignupForm_0
 kv.by##.block-kv-maillist
 freedio.co.il,indiatimes.com,tvnetil.net###backgroundPopup
 gospelprime.com.br,0lik.ru,kizlarsoruyor.com,abercrombie.com###simplemodal-overlay
 englex.ru,4kfilme.de,komtv.org,wpbakery.com##.stb-container
+slippedisc.com,kommersant.ru##.subscription_popup
 informer.com###jqibox
 haberkibris.com##.boxfb
 counter.dev,sports.yahoo.co.jp,legendas.tv,cxid.info,zaehlerschrank24.de,wppbaz.com,prostobank.ua,jav.one,smclinic-spb.ru,haberkibris.com,thurrott.com,choiz.me,indianastrology.com,ipinfo.io,firsatbufirsat.com,wotsite.net,ezoterikaved.ru,gulte.com###overlay
@@ -13065,6 +13116,7 @@ labs.google.com#@##google-hats-survey
 ||personaclick.com^$third-party
 ||qushad.com^$third-party
 ||ziwelatum.com^
+||adpush.com.tr^$third-party
 ||pushmoose.com^$third-party
 ||pushouse.com^$third-party
 ||dpns-notifications.com^
@@ -13667,6 +13719,7 @@ israelnationalnews.com##.article-join
 verstka.media##.vm-single-post-content > p:has(> a[href="https://t.me/svobodnieslova"])
 cyprus-mail.com##a[class^="_googleNewsContainer"]
 canaltech.com.br##div[class*="phone"]
+mercafe.com.br##footer > section:has(> div > form input#newsletterInlineName)
 nicematin.com###nm-newsletter-inread
 livemint.com##.newsletterRHS
 kotsovolos.gr##.MuiGrid-root > .MuiGrid-item:has(> div.footer-sections)
@@ -13714,7 +13767,6 @@ advgazeta.ru##.subscribe-link
 milatgazetesi.com##.content > div:has(> a[href^="https://www.whatsapp.com/"])
 milatgazetesi.com##.sticky > div:has(> div.row > div > a[href^="https://news.google.com/publications/"])
 stolichki.ru##.s-subscribe
-nonpaints.com###sqzl_container
 stokker.ee##div[class*="typeWarning-"]
 newsmax.com###nmsbma__container
 iz.ru##.get_news_link
@@ -13930,6 +13982,7 @@ nuevamujer.com##a[href="https://www.nuevamujer.com/newsletter/"] > img
 showyfama.com,nuevamujer.com,metroworldnews.com.br##.follow-us-wrap
 fontanka.ru##section[itemprop="articleBody"] + noindex:has(a[href="https://t.me/fontankaspb"])
 figma.com##.css-eouiu8
+remix.run#?#.container:has(> div[id="newsletter-text"])
 dp.ru##app-article-signup-newsletters
 flash.pt##.subscrever_whatsapp
 dexerto.com##.flex > div.flex:has(> form[action="/register/"])
@@ -14359,6 +14412,7 @@ petri.com##div[data-petri-section="widget-newsletter"]
 megafon.ru##.popmechanic-js-animation-wrapper
 kanobu.ru##a[class^="SocialCommunities_social"]
 timesofisrael.com##.join-community-banner
+moderncss.dev#?#article > div.promo:has(> form[name="newsletter"])
 epochtimes.jp##.home_wall
 answers.ten-navi.com###contBtnMmForm
 howstuffworks.com###async-footer > aside:has(> div > form#subscribe-form)
@@ -14394,6 +14448,7 @@ upworthy.com#$#div[id^="spopup-newsletter"] { display: none !important; }
 upworthy.com#$#body[style] { overflow: auto !important; }
 upworthy.com##.newsletter-wrapper-sidebar
 paloaltonetworks.com##.subscribe-box
+aerotime.aero##.cs-entry__subscribe
 1x.com###welcometo1x
 kayseriolay.com#?#div[class^="bg-slate"] > div.justify-end:has(> div.flex > a[href^="https://news.google.com/publications/"])
 knowtechie.com##button[swg-standard-button="subscription"]
@@ -14668,6 +14723,7 @@ agrimag.it,englishlessonsbrighton.co.uk##.et_pb_newsletter
 lezzet.com.tr#?#body > .align-items-center:has(#formSubscription)
 gripgrab.com,bluestoneperennials.com##body > div > div.needsclick
 newslab.ru##.digest-subscription
+sportico.com##.newsletter-podcast
 artnet.com##.theme-newsletter-signup
 artnet.com#$##newsletterModal { display: none !important; }
 artnet.com#$#body { overflow: auto !important; }
@@ -14780,6 +14836,8 @@ ryukyushimpo.jp,shineads.in###block-67
 toptal.com##div[data-testid^="subscribe-form"]
 baby.ru##a[href^="https://t.me/babyrutelegram?"]
 office-watch.com##.slide-in-container
+rebelnews.com#$#html { overflow: auto !important; }
+rebelnews.com#$#body { overflow: auto !important; padding-right: 0 !important; }
 teyit.org##.pwa-popup
 m.shein.co.uk##.c-quick-register.is-new-mode
 goodrx.com##div[data-qa^="NewsletterSignUp"]
@@ -14922,6 +14980,9 @@ robbreport.com##.signup-newsletter-sidebar
 science.org##.news-article__newsletter
 vaticannews.va##.teaser__shoulder-banner--newsletter
 21vek.by##.subscription-block-react
+croatiaweek.com#$#.clearfix > div.newsletter { display: none !important; }
+croatiaweek.com#$#.px2.center { display: none !important; }
+croatiaweek.com#?#.clearfix > h3:contains(Sign up to receive the Croatia Week Newsletter)
 spacenews.com##.pattern-newsletter-subscribe
 artnews.com##.get-the-magazine__outer
 12tomatoes.com###sg_email
@@ -15014,6 +15075,7 @@ searchenginejournal.com##.sej-wdg-form[aria-label="Sidebar Element"]
 wordreference.com###wotdTR
 7starhd.*#?#.primary-sidebar > div.widget-body:has(> div.textwidget > form[action^="https://feedburner.google.com/"])
 7starhd.*#?#.primary-sidebar > div.widget-title:has(> span.material-text:contains(Stay Connected!))
+lilysilk.com#$#body { overflow: auto !important; }
 cashless.pl#?#.container > div.container:has(> div.text-newsletter)
 sparkmailapp.com##.in-touch
 history-computer.com,a-z-animals.com##.hello-bar
@@ -15357,6 +15419,7 @@ theatlantic.com##div[class^="LostInventoryMessage_root__"]
 animeworld.*#?##sidebar > div.widget.simple-film-list:has(> div.widget-body > div.social-aw)
 thenextweb.com##.channel-cta
 wccftech.com##.subscribe-now
+comments.ua##article > br + p[style^="font-weight: 700!important"]
 totylkoteoria.pl##.popup-mask
 totylkoteoria.pl##.newsletter__sidebar
 nationalreview.com##.aside-module--promo-module
@@ -15757,6 +15820,7 @@ powergame.gr,nnchaber.com,mynet.com,milligazete.com.tr,yeniakit.com.tr,yenicagga
 reason.com##.single-post-signup-box
 tsargrad.tv##.article__meta-links
 medizinfuchs.de##.NewsletterInlineContent
+tommy.com###siteNewsletter
 vivoglobal.ph#?#.elementor-widget-wrap > div.elementor-widget:has(> div.elementor-widget-container > div.uael-wpf-container)
 u-news.com.ua##.related_news + center
 banki24.by##a[href="https://t.me/banki24_news"]
@@ -15917,6 +15981,7 @@ thinkmobiles.com##.footer-form-wrapper
 forums.macrumors.com##.mr_join_sidebar
 forums.macrumors.com##.mr_signup_container
 14.ru,116.ru,154.ru,161.ru,164.ru,178.ru,26.ru,29.ru,35.ru,42.ru,43.ru,45.ru,48.ru,51.ru,53.ru,56.ru,59.ru,60.ru,62.ru,63.ru,68.ru,70.ru,71.ru,72.ru,74.ru,75.ru,76.ru,86.ru,89.ru,93.ru,e1.ru,ekat.ru,irkutsk.ru,kbs.ru,mgorsk.ru,ngs.ru,ngs22.ru,ngs24.ru,ngs38.ru,ngs42.ru,ngs54.ru,ngs55.ru,ngs70.ru,nn.ru,omsk1.ru,proizhevsk.ru,provoronezh.ru,sochi1.ru,sterlitamak1.ru,tolyatty.ru,ufa1.ru,v1.ru###articleBody > div[class^="uiArticleBlockText_g83x5"]:has(> p > strong + a[href^="http://t.me/"])
+forbes.com##.article-body > div[style^="padding: 20px 0pt; margin: 20px 0pt; border-bottom: 1px solid #DDDDDD;"]
 academic.oup.com###Sidebar .widget-Alerts
 statista.com###infographicNewsletter
 govoritmoskva.ru##.darkPart > div[align="center"] > a[target="_blank"]
@@ -15961,6 +16026,7 @@ prodesigntools.com##.widget_essb_subscribe
 vanguardia.com.mx,nailsup.ro,partyfiesta.com##.block_newsletter
 forbes.ua##.c-footer-subscribes
 serokell.io,mirtesen.ru##.blog-post__subscribe
+mycs.com##.NewsletterFormBanner__newsletter
 bloomberg.com##.inline-newsletter-middle
 trashbox.ru##.div_social_2021_block
 ahrefs.com##.subscr-fright
@@ -16004,6 +16070,7 @@ businesstoday.in##div[id^="magazine_subscribe"]
 indiansexstories2.net,issstories.xyz##.sidebar > div.after_vdoc + div#secondary-sidebar
 documentaryheaven.com###side-subscribe
 worldscinema.org,acunetix.com,ruecken-zentrum.de###text-4
+pewtrusts.org##.newsletter-signup--promo
 socialblade.com##div[style^="width: 860px; min-height: 90px"]
 socialblade.com##div[style^="width: 300px; height: 250px;"][style*="background: #fff;"]
 aldi-nord.de##.mod-newsletter-teaser
@@ -16104,6 +16171,7 @@ holiholic.com,kisene.com,itcstore.in,farmasave.it##.wrapper-newsletter
 motorfinity.uk,culturewhisper.com,wiseadvice-it.ru,aajtak.in##.subscribe-banner
 elpais.com.uy,ovaciondigital.com.uy,protocol.com##.email-wrapper
 mshowto.org#?#.theiaStickySidebar > aside:has(> div.textwidget > center > a[href^="https://forms.office.com/Pages/ResponsePage.aspx"])
+infomoney.com.br##.infomoney-newsletter
 pureinfotech.com###newswrapper
 gamespot.com##.nlsub
 elle.com,bestproducts.com,womansday.com,countryliving.com,menshealth.com,autoweek.com,runnersworld.com,prevention.com##journey-inline-newsletter
@@ -16583,7 +16651,6 @@ magazine.skyeng.ru##.tg-banner
 website.com#@#.mailpoet_form
 musicalinc.de,mycopilot.ai,thomasmeyerhoefer.com,bakadesuyo.com,apotekfordeg.no,theoatmeal.com,copays.org,nothing.tech,mega-debrid.eu,curvegames.com,news.un.org,norwichzen.org.uk,dereferer.me,syncapps.io,dereferer.link,artisttrust.org,vanguardia.com.mx#@##mc_embed_signup
 buttondown.email#@##subscribe-form
-@@||loader.wisepops.com/get-loader.js$domain=bluecinema.ch
 @@||make.activehosted.com/*/embed.php$domain=makezine.com
 @@||sibforms.com/serveUnsub/
 /js/jquery.smartbanner.js
@@ -16639,7 +16706,6 @@ magnit.ru##.install-app-banner
 lenta.com##.fl-embedded-wrapper
 navitime.co.jp###body-left > div.section:has(> a[href="https://www.navitime.co.jp/pcstorage/html/japan_travel/english/"])
 megamarket.ru##.header-entry-point__app > a
-kids-doctor.jp##.detail_footer_app_dl_container
 perplexity.ai##a[href="/download-android"]
 msn.com##div[class^="weatherMobileUpsellContainer-"]
 digitimes.com.tw##+js(abort-current-script, $, apppromo)
@@ -16729,6 +16795,7 @@ m.economictimes.com##+js(set-session-storage-item, nudgeStickyBannerHide, true)
 m.economictimes.com##a[href*="app.goo.gl/?link="]
 wrtn.jp##.css-zw50as
 zutool.jp##[class^="cmn_app_link"]
+mpj-portal.jp##.mHoldem-app
 bundesliga.com##app-banner-wrapper
 realtor.com##div[class^="MobileBannerstyles"]
 gingersoftware.com##.gc-home-page > gc-new-banner-carousel:has(.icon-chrome-colored)
@@ -16791,6 +16858,8 @@ spiderum.com##.modal.cta-link
 shop-apotheke.com##+js(set-session-storage-item, ErxModal, true)
 silver.ru##.right-container > .download
 nihongomaster.com##section:has(> div[class]:only-child > picture:first-child + div:last-child > div > a[href^="https://apps.apple.com"])
+pandahelp.vip##.bottom_banner
+pandahelp.vip##.ac-popup-container
 online.citysuper.com.hk###MainContent > div[class="shopify-section"]:has(> div.brand-section > div > div.brand-section-inner > div.brand-section__buttons > a[href="https://online.citysuper.com.hk/pages/city-super-hk-app"])
 wanchan.jp##.pc_appad
 wanchan.jp##div[class^="footer_app_dl"]
@@ -16813,6 +16882,7 @@ yourweather.co.uk,theweather.net,tempo.pt,tempo.com,tiempo.com,meteored.*##.desc
 news.tvbs.com.tw##.guangxuan > a[rel="nofollow"][href^="https://bit.ly/"]
 u.gg##.builds-page-promo
 kundeavisogtilbud.no##.page-promotion-item
+happymod.com##.download_button
 hellobacsi.com##a[href="https://hellobacsivn.page.link/app"]
 clubd.co.jp##.dc-footer-banner
 nairametrics.com##.code-block.code-block-2
@@ -16988,6 +17058,8 @@ gpfans.com###androidDownload
 stheadline.com#?#.content-body > p:has(> a[href="https://bit.ly/3yLrgYZ"])
 sms-activate.org#$#.modal-backdrop { display: none !important; }
 sms-activate.org#$#body[class] { overflow: auto !important; padding-right: 0 !important; }
+magi.camp#?#aside > div.plate:has(> a.app-banner)
+magi.camp#?#.editable-content > p:has(> a[href="https://app.adjust.com/ky2lbjf"])
 presearch.com##div[x-data="extensionNotice()"]
 investing.com##.adbBetterExperiencePopup
 blockchair.com,www-y2mate.com##.extension
@@ -17163,6 +17235,7 @@ wear.jp#?##__next > div.bg-white > div.relative:has( p > a[href="/sp/app/downloa
 seiga.nicovideo.jp##.mg_rightside_top_promotion > li > div[style^="overflow: hidden; background: url"]
 meetup.com##.z-modal.items-center > div[role="dialog"][draggable="false"][style="opacity: 1; transform: none; user-select: none; touch-action: pan-x;"]
 huashi6.com##.chuzhan-app-download
+baito.mynavi.jp##.wrapMynavibaitoApplication div.panel_area
 echofm.online#?#.support:has(> div[class^="sc-"] > div[class^="sc-"] > a[href^="https://apps.apple.com/ru/app/"])
 sp.nicovideo.jp##div[id$="BannerContainer"]
 runoob.com##.fixed-btn > .qrcode
@@ -17177,6 +17250,7 @@ k.sina.com.cn##.tab_related_app_imglink
 camp-fire.jp##.pc-banner
 songkick.com##.get-mobile-app-button
 wantedly.com##div[class^="AppInstallationAlert_"]
+prabhatkhabar.com##._2_jkM
 blog.terabox.com##.download-wap
 deepl.com##aside[aria-labelledby="app-ad-banner-heading"]
 recotripp.com###is-app
@@ -17195,6 +17269,8 @@ kurashiru.com##.HeroVideoPc
 dictionary.goo.ne.jp##.campaign-banner-new
 dictionary.goo.ne.jp##a[id^="app_promo_rnavi_bnr"]
 house.goo.ne.jp##.r_ocn_banner > a[href^="https://goohouse.onelink.me/"]
+mecicolle.gnavi.co.jp#$#.fixed-banner { display: none !important; }
+mecicolle.gnavi.co.jp#$#body[data-fixed-banner-is-active="true"] #header { padding-top: 0 !important; }
 lp.p.pia.jp##.footer__menu__group--download
 dropbox.com##.dig-Banner
 dropbox.com##+js(set-cookie, seen-sl-download-modal, true)
@@ -17288,6 +17364,7 @@ calend.ru##.banner2
 tieba.baidu.com##.app_download_box
 myfin.by##.own-services-promo
 tumblr.com#?#div[aria-label="Notification"]:has(> div > a[href="/open/app?referrer=mobile_banner"])
+lipscosme.com##.welcome-index__hero
 b.hatena.ne.jp##div[class*="js-dynamic-link-app-banner"]
 b.hatena.ne.jp##.comment-store
 blutspendedienst.com##+js(set-cookie-reload, smartbanner_exited, 1)
@@ -17324,6 +17401,8 @@ dmzj.com##.float_code
 infobus.*##.application-brief
 pepper.ru##div[data-track*="app_installs_banner"]
 haveagood.holiday##+js(remove-class, top-app-banner-exists, #contentWrapper)
+asajikan.jp##.apri_b_pc
+asajikan.jp##.apri_b_sp
 asajikan.jp##+js(set-cookie, header-guidance-close, true)
 m.guancha.cn##.g_swiper_container
 whowatch.tv,curazy.com,ebay.*,locari.jp##.app-download-banner
@@ -17337,6 +17416,7 @@ banggood.com#$#.header.show-app-bar { top: 0 !important; }
 banggood.com#$##appTopBar { display: none !important; }
 retty.me,redbull.com##.web-to-app
 dev.to###runtime-banner-container
+dailymail.co.uk#$#body > section#mobile-content { margin-top: 0 !important; height: 100% !important; }
 konest.com##div[style$="width:128px; height:240px;"]
 storm.mg##+js(set-cookie, app_download_banner, true)
 storm.mg###floating_bottom_ad
@@ -17671,6 +17751,7 @@ trendyol.com,tripadvisor.ru,prog-8.com,spice.eplus.jp,catalog.onliner.by,hket.co
 soundcloud.com##article.mobileApps
 wattpad.com###bottom-banner-container
 wattpad.com###announcements-container
+zargan.com###app-menu
 americanexpress.com,e-aidem.com##.appbanner
 journaldequebec.com,journaldemontreal.com,medizinfuchs.de###appbanner
 services.clp.com.hk,pikabu.ru,uol.com.br,m.netpincer.hu,m.yelp.com,opodo.de###smart-banner
@@ -18728,6 +18809,7 @@ famitsu.com#?#.l-contents-block:has(> .heading > .heading__title:contains(特設
 famitsu.com#?#.row > .col-12:has(> .card > .ad-native-campaign)
 ||coin-hive.com^$third-party
 ||coinhive.com^$third-party
+123telugu.com###text-16
 timesofisrael.com##+js(remove-class, vjs-pip-active, .video-js.vjs-pip-active)
 ultimedia.com##+js(set-constant, dtkPlayer.infos.visible_plus, 0)
 mirror.co.uk##reach-nav-share ~ div.social-sites
@@ -18751,6 +18833,7 @@ ubisoft.com#?##app > .close-content:has(> .promo)
 autoevolution.com##.padcol2.mgtop_20
 huffingtonpost.fr###dailymotion-pip-large-viewport
 dumskaya.net##.twitter-follow-button
+progorodnn.ru##div[class^="social-list-subscribe_socialListSubscribe"]
 chunichi.co.jp#?#.sub-container-wrp > div.l-container:has(> div[class] > div.l-column > div.wrp > a[href^="https://plus.chunichi.co.jp/"])
 chunichi.co.jp#?#.content-area > div.l-container > div.l-container:has(> div.cscmp-misc001)
 accuweather.com##+js(remove-class, cnx-float, .cnx-content-wrapper.cnx-float)
@@ -18789,6 +18872,7 @@ msn.com##.banner-container
 theweathernetwork.com#$#body[style*="overflow"] { overflow-y: visible !important; }
 theweathernetwork.com##+js(remove-class, jw-flag-floating, .news-article-body .jwplayer.jw-flag-floating)
 porn5f.com##.top_slider
+||pay-day.ru/wp-content/cache/min/1/js/vq_starter.js
 myiptvforum.com##a[href="https://myiptvforum.com/paid-ads/"] > img
 golem.de##a[href^="https://hits.golem.de"]
 gitee.com##.register-guide
@@ -18796,6 +18880,8 @@ lpgenerator.ru##.blog__content__entriesList__entryFull_footer
 indifferentlanguages.com##.too-many
 bing.com##.moduleCont > a[data-h^="ID=HpApp"]
 nova.rambler.ru##:matches-path(/search)div[class^="SerpWarning__warning"]
+gamestar.de#?#.box-reload > .media:not(:has(> *)):not(:contains(/[a-zA-Z0-9]/))
+gamestar.de#?#.box-reload > .media:not(:has(> *)):not(:contains(/[a-zA-Z0-9]/)) + hr
 public.fr###dailymotion-pip-large-viewport
 voici.fr###dailymotion-pip-large-viewport
 svoboda.org#?#.wsw > div.wsw__embed:has(> div.infgraphicsAttach > div[id^="GR-"] > a[href^="https://news.google.com/publications/"])
@@ -19482,6 +19568,7 @@ virustotal.com##span[slot="header"] > div + a[href^="https://developers.virustot
 liga.net##a[href="https://www.liga.net/adfree"]
 audioholics.com##+js(no-setTimeout-if, #sitemodal)
 abczdrowie.pl##.be-healthy
+easeus.co.kr##.float_banner
 ||img5.lalafo.com/i/banners
 lalafo.kg##+js(remove-class, with-branding, .main-layout)
 washingtonpost.com#$#body[style*="position: fixed"] { height: auto !important; width: auto !important; position: static !important; min-width: auto !important; }
@@ -19570,6 +19657,7 @@ cookien.com#$#hgroup { top: 0 !important; }
 cookien.com#$##masthead { height: 45px !important; }
 oricon.co.jp##.block-banner
 aumo.jp#?#.entries-item-link[href^="javascript:"]:upward(1)
+||insurance.rakuten.co.jp/car/img/banner/mno_
 ||lolipop.jp/img/bnr/bnr_lolipop_ad_
 goguynet.jp###async-ad_line2
 car-mo.jp##.ad-carview
@@ -19579,6 +19667,7 @@ nijiyome.jp###topjackContents
 heise.de##section[data-component="MarketingTeaserModule"]
 heise.de#?#article[data-component="TeaserContainer"]:has(> a > div[data-component="TeaserLinkContainer"] > footer[data-component="TeaserMeta"] > .font-bold:contains(heise-Angebot))
 heise.de#?#article[data-component="TeaserContainer"]:has(> a > div[data-component="TeaserLinkContainer"] > footer[data-component="TeaserMeta"] > .font-bold:contains(heise-Angebot)) + hr.border-gray-100
+admin.blog.fc2.com##.adimn_pr_txt
 transit.yahoo.co.jp##.mdSidePromo
 yahoo.co.jp##.MtoCLink
 pc-koubou.jp##.banner-side
@@ -19686,6 +19775,7 @@ oita-press.co.jp##.pr-banner-wrap
 avito.ru##div[class^="create-promocode-banner"]
 ||rakuten.co.jp/sitemap/img/banner/
 ||jugem.jp/user_blog/ad/
+alibaba.com#?#div[data-content="abox-ProductNormalList"] > div.J-offer-wrapper:has(> div > i.search-ad-icon)
 similarsites.com##div[class^="HomepageBanner__"]
 similarsites.com##div[class^="SimilarSitesCardBanner__"]
 similarsites.com##div[class^="FooterBanner__"]
@@ -19707,6 +19797,7 @@ www.kinopoisk.ru##a[href="https://hd.kinopoisk.ru/?source=kinopoisk_head_button"
 www.kinopoisk.ru##div[class^="trailer-promo"]
 e.mail.ru,octavius.mail.ru##div[data-test-id^="subscriptions_v"]
 e.mail.ru,octavius.mail.ru#$?#html { --vkui--octavius_size_headline_height--regular: 36px !important; }
+mail.ru#?#body a[href^="https://r.mail.ru/"]:has(> span[class] > span[id^="tb-close-"])
 member.id.rakuten.co.jp###recommendService
 duckduckgo.com##.onboarding-ed
 duckduckgo.com#$#.js-header-aside.is-hidden { display: block!important; }
@@ -19810,6 +19901,8 @@ msn.com#$#body { overflow: initial!important; }
 1tv.ru##.footer-promo-place
 nim.ru##.widget.banner
 ||nim.ru/i/1920_1101/banner/
+alexfitness.ru#$#div.modal-backdrop { display: none!important; }
+alexfitness.ru#$#.modal-open { overflow: visible!important; }
 ||contributions.guardianapis.com^
 banki.ru##div[data-test="news-all-markdown"] > p:has(> a[href^="https://www.banki.ru/broker-mortgage/"])
 banki.ru##section[class^="HypothecOffers"]
@@ -19982,6 +20075,7 @@ dealabs.com##div[id^="customBannerList-id"]
 ||site.pfm.moneyforward.com/prod/appstorage/pfm/web_banner/
 pixiv.net##div[style^="margin-left: 0px; --columns"] div[class^="sc-"] > div[class^="sc-"] > section[class^="sc-"]:has(> div[class^="sc-"] > a[href^="/premium/lead/lp/?"])
 pixiv.net##.banner-ad-footer-scale
+prospectmagazine.co.uk###piano_ribbon_collapsible_container
 myupchar.com##a[class^="ad_slot_"]
 1024terabox.com##.seo-banner-box
 jfrog.com##.top-fixed-stripe
@@ -20200,6 +20294,7 @@ epicweb.dev#$?##app > .fixed:has(> nav) { top: 0 !important; }
 deeplearning.ai###top-announcement
 deeplearning.ai#?#aside.flex-col > div.relative:has(> span + a[href^="https://www.deeplearning.ai/resources/"])
 svetapple.sk#?#.td-post-content > p:has(> a[href="https://svetapple.sk/bazar/"])
+unacademy.com##img[alt="testseries_afcat"]
 biblegateway.com##.sys-announce-content
 krakenfiles.com##.buyPremiumAlert
 pandavpnpro.com##.panda-blog-purchase-aside
@@ -20233,6 +20328,7 @@ deepl.com##div[data-testid="write-promo-banner"]
 deepl.com##aside[aria-labelledby="career-banner-heading"]
 deepl.com##aside[data-testid="pro_ad_content"]
 new-123movies.live#?#online + section > script + div[class]:has(> div[style] > a[href="/user/profile/premium-membership"])
+fly.io#?#section > figure.post-cta:has(> div.image-container > img[src="/static/images/cta-kitty.webp"])
 dzone.com##.signin-prompt
 biglobe.ne.jp##.h_bar
 ||backgrounds.wetransfer.net^
@@ -20416,6 +20512,7 @@ youtube-thumbnail-grabber.com###extension-container
 apkmonk.com##.apkmonk_banner
 consumerreports.org##.cda-article__col div[id^="monetate_selectorHTML"]
 npr.org###ad-backstage-wrap + div.flex-location-wrap
+hira2.jp##.p-infobar-wrapper--header-bottom
 urbandictionary.com##a[href^="https://ads.urbandictionary.com"]
 g2a.com#?#main > div[class^="PageBlock_"]:has(> section a[href="https://www.g2a.com/best-deals/consoles"])
 realsound.jp###bookStore
@@ -20758,6 +20855,7 @@ simplilearn.com##.engagingBanner
 shazam.com##.shz-frame-promotionbanner
 lenstip.com##.shortcode-content > center > table[width="680"][style^="background-color:"]
 lenstip.com##.shortcode-content > center:has(> table[width="680"][style^="background-color:"])
+blog.csdn.net##.csdn-common-logo-advert
 apteka.ru##.banners
 ccleaner.com##div[data-componentname="article-sharing"] + div[data-componentname="article-cta"]
 litres.ru##.Banners-module__wrapper
@@ -20842,6 +20940,7 @@ howtofix.guide##.coupon-box-wrap
 handwritter.ru##.donate_alert
 indianexpress.com#$?#body { overflow: auto !important; }
 icourse163.org##div[id*="activity"][id*="Banner"]
+support.zoom.us,texterra.ru,lbb.in##.header-banner
 proshop.dk##.site-background-banner
 proshop.dk##a[data-action="campaignClick"][data-position="bottom-left"]
 proshop.dk##.site-top-banner
@@ -20931,6 +21030,7 @@ filmix.biz,filmix.ac,filmix.tech,filmix.zone##.remove-sda-wrap
 zoon.ru###zoonHeader
 praxistipps.chip.de##.Article__Promo
 pdfdrive.com,armorgames.com##.premium-promo
+ligovka.ru##.promo-links
 xtremetop100.com##a[href="/contact.php"][rel="nofollow"]
 facebook.com,facebookwkhpilnemxj7asaniu7vnjjbiltxjqhye3mhbshg7kx5tfyd.onion##a[title*="AdChoices"]
 ||illicium.wmtransfer.com^
@@ -22092,6 +22192,7 @@ uma-log.net##.w-singleBottom > div[id^="custom_html-"]
 umamusume.net##.article-rssbox2
 jumpsokuhou.com#?#.article-body > h3.clearfix:contains(オススメサイト最新記事)
 jumpsokuhou.com##.osusume
+zzz.gamers-luck.com##.single-related-area
 doujin.koe-koe.com##.rssTopG
 livejupiter2.blog.jp##.blogroll_outline > div.blogroll_body:has(> #pickupu)
 livejupiter2.blog.jp###sub > div.plugin-memo:has(> .sidetitlebody > .sidetitle > div > img[src="https://livejupiter2.blog.jp/side_base.gif"])
@@ -22171,7 +22272,6 @@ jiwasoku.com###test-blo
 mona-news.com##.article-body-inner > dd:has(a[href^="https://livedoor.blogimg.jp/mona_news/"]) ~ dd
 suresuta.jp#?##main > div.linkbox:has(> p.kiji-shita)
 suresuta.jp##.underrssbox
-sindoi.com##div[class^="sougo-rss"]
 h-ken.net###footer-rssLinkListHtml
 baiku-sokuho.info##.links2
 seikeidouga.blog.jp##fieldset
@@ -22321,6 +22421,7 @@ uwakich.com##div[style^="height:"][style*="width:"][style$="px; overflow-y:scrol
 ||mojokosan.doorblog.jp/rss10.html
 mojokosan.doorblog.jp##.column-inner-2 > center > table
 mojokosan.doorblog.jp##.column-inner-2 > span[style="color: #333333; font-size: 16px"]
+sutekinakijo.com#?#.plugin-memo > div.side > script[src$="/blogroll.js"]:upward(2)
 nekowan.com##div[class^="rss_comsita_saigo"]
 nekowan.com##div[class^="blogroll-"]
 kazokuchannel.doorblog.jp##.left-column-inner > div.plugin-memo:first-child
@@ -22415,6 +22516,7 @@ tozanchannel.blog.jp##.article-body-inner div[style="font-size: 120%; padding-le
 gundamlog.com###kijisita_rss2
 kanasoku.info##.headline_middle
 kanasoku.info#?##headrank2:contains(/Pickup|オススメ|注目の記事/)
+||blog.livedoor.jp/kijyomita/rss/
 kijonotakuhaibin.com,kijyomita.com##.osusume-saisin
 ||anicobin.ldblog.jp^$subdocument,~third-party
 anicobin.ldblog.jp#$#.rss-wrapper2 { height: 0 !important; background: none !important; padding-bottom: 0 !important; }
@@ -22885,6 +22987,7 @@ my.rakuten.co.jp###survey-area
 ||cdn.mindbehind.com/sdk/mindbehind-webchat.js
 amazon.*###customer-survey_feature_div
 infranken.de###singlewidget_standalone
+unitedutilities.com##.c-recite-me
 blamper.ru##div[data-module^="widgets/common/FakeChat/"]
 centr-hirurgii.ru,smclinic.ru###call-btn
 eldorado.ru###custom-livetex-fab
@@ -22965,6 +23068,7 @@ yomuno.jp###similar_articles
 newsee-media.com,saitama-np.co.jp,htb.co.jp,oricon.co.jp,maidonanews.jp##.uz-ny
 ||gacraft.jp^$third-party
 houyhnhnm.jp##.section-similer-post
+otonano-shumatsu.com##.popin-block
 tss-tv.co.jp##.hns_bottomadbox
 yamakei-online.com##.ad-pop-nw3-nw4
 ryukyushimpo.jp#?#article ~ .flex-col:has(.items-center > #_popIn_recommend)
@@ -23063,7 +23167,6 @@ moluch.ru##.ask_out
 @@||service.force.com/embeddedservice/*/esw.min.js$domain=microchip.com|visible.com|playstation.com|cyberpowersystems.com|lego.com|support.sonos.com
 ||app.getreview.io/*/widget$script,domain=menunedeli.ru
 yuumi-sokuhou.com##.rss-feed
-||docs.google.com/forms/d/e/*/viewform?embedded=true$domain=www.itmedia.co.jp
 journal.sovcombank.ru#?#article > div[class^="sc-"] > div:not([class]):has(div:contains(Факт дня))
 ||s-cdn.sportbox.ru/sites/*/coefs-parser/coefs-parser.global.js
 ||quiz.rambler.ru^$domain=lenta.ru
@@ -23134,6 +23237,7 @@ mediametrics.ru##.currency-moving-block
 miningclub.info#?#.p-body-sidebar > div.block:has(> div.block-container > h3.block-minorHeader:contains(Курсы))
 abplive.com,irliepaja.lv##.weather-widget
 syzran-small.ru##.pogoda
+harpersbazaar.com.ua#?#.content > div:has(> div#SinoptikInformer)
 ||informer.gismeteo.ru^$domain=~gismeteo.ru
 ukr.net###sinoptik_container
 ##.gsInformer
