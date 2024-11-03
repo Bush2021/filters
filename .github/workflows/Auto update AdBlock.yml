@@ -1,0 +1,58 @@
+name: 'Auto Update AdBlock'
+on: 
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 */3 * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Download Filters
+        run: |
+          filters=(
+            "AdGuard_Simplified_Domain_Names_Filter.txt|https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt"
+            "AdGuard_Base_filter.txt|https://filters.adtidy.org/extension/ublock/filters/2_optimized.txt"
+            "AdGuard_Chinese_filter.txt|https://filters.adtidy.org/extension/ublock/filters/224_optimized.txt"
+            "AdGuard_Tracking_Protection_filter.txt|https://filters.adtidy.org/extension/ublock/filters/3_optimized.txt"
+            "AdGuard_Tracking_Parameters.txt|https://filters.adtidy.org/extension/ublock/filters/17_optimized.txt"
+            "AdGuard_Annoyances_filter.txt|https://filters.adtidy.org/extension/ublock/filters/14_optimized.txt"
+            "AdGuard_Annoyances_Cookies.txt|https://filters.adtidy.org/extension/ublock/filters/18_optimized.txt"
+            "AdGuard_Popups.txt|https://filters.adtidy.org/extension/ublock/filters/19_optimized.txt"
+            "EasyList.txt|https://easylist-downloads.adblockplus.org/easylist.txt"
+            "EasyList_China.txt|https://easylist-downloads.adblockplus.org/easylistchina.txt"
+            "EasyPrivacy.txt|https://easylist-downloads.adblockplus.org/easyprivacy.txt"
+            "CJX's_EasyList_Lite.txt|https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjxlist.txt"
+            "CJX's_Annoyance_List.txt|https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjx-annoyance.txt"
+            "Xinggsf_rule.txt|https://raw.githubusercontent.com/xinggsf/Adblock-Plus-Rule/master/rule.txt"
+            "Xinggsf_mv.txt|https://raw.githubusercontent.com/xinggsf/Adblock-Plus-Rule/master/mv.txt"
+            "Xinggsf_minority-mv.txt|https://raw.githubusercontent.com/xinggsf/Adblock-Plus-Rule/master/minority-mv.txt"
+            "Xinggsf_dynamic.txt|https://raw.githubusercontent.com/xinggsf/Adblock-Plus-Rule/master/ublock-dynamic-rule.txt"
+          )
+          for filter in "${filters[@]}"; do
+            filename="${filter%%|*}"
+            url="${filter##*|}"
+            echo "Downloading $filename from $url"
+            curl -L "$url" -o "$filename"
+          done
+
+      - name: Commit Changes
+        env:
+          TZ: America/New_York
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No changes to commit"
+            exit 0
+          else
+            git add .
+            git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git config --local user.name "github-actions bot"
+            git commit -m ":pencil: Update filters at $(date +"%Y-%m-%d %H:%M")"
+            git push
+          fi
